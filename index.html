@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integral de Informes Holter PA - Ergo SaniTas SpA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1>Sistema Integral de Informes Holter PA</h1>
+                    <p class="company-name">Ergo SaniTas SpA - Salud Familiar y Deportiva</p>
+                </div>
+                <div class="header-info">
+                    <p>Monitorización Ambulatoria de Presión Arterial 24 hrs - MAPA</p>
+                    <p class="date-time" id="current-datetime"></p>
+                </div>
+            </div>
+        </header>
+        
+        <nav>
+            <button class="nav-btn active" onclick="showSection('profile')">Perfil Médico</button>
+            <button class="nav-btn" onclick="showSection('users')">Gestión de Pacientes</button>
+            <button class="nav-btn" onclick="showSection('data-entry')">Ingreso de Datos MAPA</button>
+            <button class="nav-btn" onclick="showSection('daily-log')">Registro Diario</button>
+            <button class="nav-btn" onclick="showSection('analysis')">Análisis Inteligente</button>
+            <button class="nav-btn" onclick="showSection('report')">Informe Automático</button>
+            <button class="nav-btn" onclick="showSection('history')">Historial</button>
+        </nav>
+        
+        <div class="content">
+            <!-- Perfil Médico Section -->
+            <section id="profile-section" class="form-section">
+                <h2 class="section-title">Perfil del Médico</h2>
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <span class="avatar-text">MD</span>
+                        </div>
+                        <div class="profile-info">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="doctor-name" placeholder="Dr. Nombre Apellido">
+                            </div>
+                            <div class="form-group">
+                                <label>Especialidad</label>
+                                <input type="text" id="doctor-specialty" placeholder="Cardiología">
+                            </div>
+                            <div class="form-group">
+                                <label>Institución</label>
+                                <input type="text" id="doctor-institution" value="Ergo SaniTas SpA">
+                            </div>
+                            <div class="form-group">
+                                <label>RUT Profesional</label>
+                                <input type="text" id="doctor-rut" placeholder="12.345.678-9">
+                            </div>
+                            <div class="form-group">
+                                <label>Registro Médico</label>
+                                <input type="text" id="doctor-registry" placeholder="Número de registro">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Estadísticas del Sistema</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Informes Generados:</span>
+                            <span class="stat-value" id="reports-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Pacientes Registrados:</span>
+                            <span class="stat-value" id="patients-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Último Acceso:</span>
+                            <span class="stat-value" id="last-access">Hoy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveProfile()">Guardar Perfil</button>
+                    <button class="btn btn-secondary" onclick="resetProfile()">Restablecer</button>
+                </div>
+            </section>
+
+            <!-- Gestión de Pacientes Section -->
+            <section id="users-section" class="form-section hidden">
+                <h2 class="section-title">Gestión de Pacientes</h2>
+                <div class="patients-container">
+                    <div class="patient-form-card">
+                        <h3>Registro de Nuevo Paciente</h3>
+                        <form id="patient-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Nombre Completo *</label>
+                                    <input type="text" id="patient-fullname" placeholder="Nombre completo del paciente" required>
+                                    <span class="error-message" id="fullname-error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Edad *</label>
+                                    <input type="number" id="patient-age" min="0" max="120" placeholder="Edad en años" required>
+                                    <span class="error-message" id="age-error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>RUT *</label>
+                                    <input type="text" id="patient-rut" placeholder="12.345.678-9" required>
+                                    <span class="error-message" id="rut-error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sexo *</label>
+                                    <select id="patient-gender" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="femenino">Femenino</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <input type="tel" id="patient-phone" placeholder="+56 9 1234 5678">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="patient-email" placeholder="paciente@email.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Enfermedades Preexistentes</label>
+                                <textarea id="patient-diseases" placeholder="Diabetes, Hipertensión, Cardiopatías, etc." rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Medicamentos Actuales</label>
+                                <textarea id="patient-medications" placeholder="Medicamentos con dosis y frecuencia" rows="3"></textarea>
+                            </div>
+                            <div class="action-buttons">
+                                <button type="submit" class="btn btn-primary">Registrar Paciente</button>
+                                <button type="button" class="btn btn-secondary" onclick="resetPatientForm()">Limpiar Formulario</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="patients-list-card">
+                        <h3>Pacientes Registrados</h3>
+                        <div id="patients-list" class="patients-list">
+                            <p class="no-patients">No hay pacientes registrados</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ingreso de Datos MAPA Section -->
+            <section id="data-entry-section" class="form-section hidden">
+                <h2 class="section-title">Ingreso de Datos del Holter de PA - MAPA</h2>
+                
+                <div class="data-entry-container">
+                    <div class="card">
+                        <h3>Selección de Paciente</h3>
+                        <div class="form-group">
+                            <label>Paciente</label>
+                            <select id="selected-patient">
+                                <option value="">Seleccione un paciente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Datos del Estudio MAPA</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Fecha del Estudio</label>
+                                <input type="date" id="study-date">
+                            </div>
+                            <div class="form-group">
+                                <label>Duración del Registro</label>
+                                <input type="text" id="study-duration" placeholder="24 horas 15 minutos">
+                            </div>
+                            <div class="form-group">
+                                <label>Calidad del Registro (%)</label>
+                                <input type="number" id="study-quality" min="0" max="100" placeholder="95.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Dispositivo Utilizado</label>
+                                <input type="text" id="study-device" placeholder="Marca y modelo del dispositivo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Resultados de Presión Arterial</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Promedio 24h - Sistólica (mmHg)</label>
+                                <input type="number" id="avg-24h-sys" placeholder="130">
+                            </div>
+                            <div class="form-group">
+                                <label>Promedio 24h - Diastólica (mmHg)</label>
+                                <input type="number" id="avg-24h-dia" placeholder="80">
+                            </div>
+                            <div class="form-group">
+                                <label>Promedio Diurno - Sistólica (mmHg)</label>
+                                <input type="number" id="avg-day-sys" placeholder="135">
+                            </div>
+                            <div class="form-group">
+                                <label>Promedio Diurno - Diastólica (mmHg)</label>
+                                <input type="number" id="avg-day-dia" placeholder="85">
+                            </div>
+                            <div class="form-group">
+                                <label>Promedio Nocturno - Sistólica (mmHg)</label>
+                                <input type="number" id="avg-night-sys" placeholder="120">
+                            </div>
+                            <div class="form-group">
+                                <label>Promedio Nocturno - Diastólica (mmHg)</label>
+                                <input type="number" id="avg-night-dia" placeholder="70">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Parámetros Adicionales</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Carga Hipertensiva Sistólica (%)</label>
+                                <input type="number" id="hypertensive-load-sys" min="0" max="100" placeholder="45">
+                            </div>
+                            <div class="form-group">
+                                <label>Carga Hipertensiva Diastólica (%)</label>
+                                <input type="number" id="hypertensive-load-dia" min="0" max="100" placeholder="35">
+                            </div>
+                            <div class="form-group">
+                                <label>Dipping Sistólico (%)</label>
+                                <input type="number" id="dipping-sys" placeholder="12">
+                            </div>
+                            <div class="form-group">
+                                <label>Dipping Diastólico (%)</label>
+                                <input type="number" id="dipping-dia" placeholder="15">
+                            </div>
+                            <div class="form-group">
+                                <label>Presión de Pulso 24h (mmHg)</label>
+                                <input type="number" id="pulse-pressure" placeholder="50">
+                            </div>
+                            <div class="form-group">
+                                <label>Frecuencia Cardíaca Promedio (lpm)</label>
+                                <input type="number" id="avg-heart-rate" placeholder="72">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Observaciones Clínicas</h3>
+                        <div class="form-group">
+                            <label>Hallazgos Relevantes</label>
+                            <textarea id="clinical-findings" placeholder="Describa los hallazgos más relevantes del estudio..." rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Comentarios Adicionales</label>
+                            <textarea id="additional-notes" placeholder="Comentarios adicionales del médico..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="validateAndAnalyze()">Validar y Analizar</button>
+                        <button class="btn btn-secondary" onclick="saveDraft()">Guardar Borrador</button>
+                        <button class="btn btn-danger" onclick="clearDataEntry()">Limpiar Datos</button>
+                    </div>
+            </section>
+
+            <!-- Registro Diario Section -->
+            <section id="daily-log-section" class="form-section hidden">
+                <h2 class="section-title">Registro de Actividades Diarias - MAPA</h2>
+                <div class="daily-log-container">
+                    <div class="patient-selection-card">
+                        <h3>Selección de Paciente</h3>
+                        <div class="form-group">
+                            <label>Paciente para Registro Diario</label>
+                            <select id="daily-log-patient">
+                                <option value="">Seleccione un paciente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="daily-activities-card">
+                        <h3>Registro de Actividades del Día</h3>
+                        
+                        <!-- Fecha y Hora -->
+                        <div class="time-section">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Fecha del Registro</label>
+                                    <input type="date" id="log-date">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora del Registro</label>
+                                    <input type="time" id="log-time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medicamentos -->
+                        <div class="medication-section">
+                            <h4>💊 Medicamentos</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Medicamento Tomado</label>
+                                    <input type="text" id="medication-name" placeholder="Nombre del medicamento">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora de Toma</label>
+                                    <input type="time" id="medication-time">
+                                </div>
+                                <div class="form-group">
+                                    <label>Dosis</label>
+                                    <input type="text" id="medication-dose" placeholder="Ej: 5mg, 1 tableta">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Observaciones sobre Medicamentos</label>
+                                <textarea id="medication-notes" placeholder="¿Se tomó a tiempo? ¿Hubo algún problema?" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Alimentación -->
+                        <div class="food-section">
+                            <h4>🍽️ Alimentación</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Tipo de Comida</label>
+                                    <select id="meal-type">
+                                        <option value="">Seleccione</option>
+                                        <option value="desayuno">Desayuno</option>
+                                        <option value="almuerzo">Almuerzo</option>
+                                        <option value="once">Once/Merienda</option>
+                                        <option value="cena">Cena</option>
+                                        <option value="colacion">Colación</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora de Comida</label>
+                                    <input type="time" id="meal-time">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción de Alimentos</label>
+                                <textarea id="meal-description" placeholder="Describa brevemente lo que comió" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad de Sal</label>
+                                <select id="salt-intake">
+                                    <option value="">Seleccione</option>
+                                    <option value="sin-sal">Sin sal agregada</option>
+                                    <option value="poca-sal">Poca sal</option>
+                                    <option value="sal-normal">Sal normal</option>
+                                    <option value="mucha-sal">Mucha sal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Síntomas -->
+                        <div class="symptoms-section">
+                            <h4>🤕 Síntomas</h4>
+                            <div class="symptoms-grid">
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="headache">
+                                    <label for="headache">Dolor de cabeza</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="dizziness">
+                                    <label for="dizziness">Mareos</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="nausea">
+                                    <label for="nausea">Náuseas</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="fatigue">
+                                    <label for="fatigue">Cansancio</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="chest-pain">
+                                    <label for="chest-pain">Dolor en el pecho</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="palpitations">
+                                    <label for="palpitations">Palpitaciones</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="shortness-breath">
+                                    <label for="shortness-breath">Falta de aire</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="vision-problems">
+                                    <label for="vision-problems">Problemas de visión</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Intensidad de Síntomas (1-10)</label>
+                                <input type="range" id="symptom-intensity" min="1" max="10" value="1">
+                                <span id="intensity-value">1</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción Adicional de Síntomas</label>
+                                <textarea id="symptom-description" placeholder="Describa cómo se sintió" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Estado de Ánimo y Estrés -->
+                        <div class="mood-section">
+                            <h4>😊 Estado de Ánimo y Estrés</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Nivel de Estrés (1-10)</label>
+                                    <input type="range" id="stress-level" min="1" max="10" value="1">
+                                    <span id="stress-value">1</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Estado de Ánimo</label>
+                                    <select id="mood">
+                                        <option value="">Seleccione</option>
+                                        <option value="muy-bien">Muy bien 😊</option>
+                                        <option value="bien">Bien 🙂</option>
+                                        <option value="normal">Normal 😐</option>
+                                        <option value="mal">Mal 😟</option>
+                                        <option value="muy-mal">Muy mal 😢</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>¿Qué le causó estrés hoy?</label>
+                                <textarea id="stress-cause" placeholder="Describa situaciones estresantes del día" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Sueño -->
+                        <div class="sleep-section">
+                            <h4>😴 Sueño</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Hora de Acostarse</label>
+                                    <input type="time" id="bedtime">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora de Levantarse</label>
+                                    <input type="time" id="wake-time">
+                                </div>
+                                <div class="form-group">
+                                    <label>Calidad del Sueño</label>
+                                    <select id="sleep-quality">
+                                        <option value="">Seleccione</option>
+                                        <option value="excelente">Excelente</option>
+                                        <option value="buena">Buena</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="mala">Mala</option>
+                                        <option value="muy-mala">Muy mala</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sleep-problems">
+                                <label>Problemas durante el sueño:</label>
+                                <div class="symptoms-grid">
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="sleep-interruptions">
+                                        <label for="sleep-interruptions">Interrupciones frecuentes</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="snoring">
+                                        <label for="snoring">Ronquidos</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="nightmares">
+                                        <label for="nightmares">Pesadillas</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="insomnia">
+                                        <label for="insomnia">Insomnio</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Problemas con el Equipo -->
+                        <div class="equipment-section">
+                            <h4>⚙️ Problemas con el Equipo Holter CONTEC</h4>
+                            <div class="form-group">
+                                <label>¿Hubo problemas con el brazalete o equipo?</label>
+                                <select id="equipment-problems">
+                                    <option value="no">No, funcionó correctamente</option>
+                                    <option value="si">Sí, hubo problemas</option>
+                                </select>
+                            </div>
+                            <div class="equipment-issues hidden" id="equipment-issues">
+                                <div class="symptoms-grid">
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="tight-cuff">
+                                        <label for="tight-cuff">Brazalete muy apretado</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="loose-cuff">
+                                        <label for="loose-cuff">Brazalete muy suelto</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="noise">
+                                        <label for="noise">Ruido molesto</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="frequent-measurements">
+                                        <label for="frequent-measurements">Mediciones muy frecuentes</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="skin-irritation">
+                                        <label for="skin-irritation">Irritación en la piel</label>
+                                    </div>
+                                    <div class="symptom-item">
+                                        <input type="checkbox" id="equipment-error">
+                                        <label for="equipment-error">Error del equipo</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Descripción del Problema</label>
+                                    <textarea id="equipment-description" placeholder="Describa detalladamente el problema con el equipo" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actividad Física -->
+                        <div class="activity-section">
+                            <h4>🏃‍♂️ Actividad Física</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Tipo de Actividad</label>
+                                    <select id="activity-type">
+                                        <option value="">Seleccione</option>
+                                        <option value="reposo">Reposo/Descanso</option>
+                                        <option value="caminar">Caminar</option>
+                                        <option value="ejercicio-ligero">Ejercicio ligero</option>
+                                        <option value="ejercicio-moderado">Ejercicio moderado</option>
+                                        <option value="ejercicio-intenso">Ejercicio intenso</option>
+                                        <option value="trabajo-fisico">Trabajo físico</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Duración (minutos)</label>
+                                    <input type="number" id="activity-duration" min="0" placeholder="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción de la Actividad</label>
+                                <textarea id="activity-description" placeholder="Describa la actividad realizada" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Comentarios Generales -->
+                        <div class="general-comments-section">
+                            <h4>📝 Comentarios Generales del Día</h4>
+                            <div class="form-group">
+                                <label>¿Algo más que quiera agregar sobre su día?</label>
+                                <textarea id="general-comments" placeholder="Cualquier otra observación importante del día..." rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="saveDailyLog()">Guardar Registro</button>
+                            <button class="btn btn-secondary" onclick="viewDailyHistory()">Ver Historial</button>
+                            <button class="btn btn-danger" onclick="clearDailyLog()">Limpiar Formulario</button>
+                        </div>
+                    </div>
+
+                    <!-- Historial de Registros Diarios -->
+                    <div class="daily-history-card">
+                        <h3>Historial de Registros Diarios</h3>
+                        <div id="daily-history-list" class="daily-history-list">
+                            <p class="no-history">No hay registros diarios guardados</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Análisis Inteligente Section -->
+            <section id="analysis-section" class="form-section hidden">
+                <h2 class="section-title">Análisis Inteligente con IA</h2>
+                <div class="analysis-container">
+                    <div class="analysis-card">
+                        <h3>Análisis Automático</h3>
+                        <div id="analysis-content" class="analysis-content">
+                            <p>Complete los datos del estudio MAPA para generar el análisis automático.</p>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="generateAIAnalysis()">Generar Análisis con IA</button>
+                            <button class="btn btn-secondary" onclick="showSection('data-entry')">Volver a Datos</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Informe Automático Section -->
+            <section id="report-section" class="form-section hidden">
+                <h2 class="section-title">Informe Automático</h2>
+                <div class="report-container">
+                    <div class="report-preview">
+                        <div id="report-content" class="report-content">
+                            <p>No se ha generado ningún informe. Complete los datos del paciente y estudio MAPA.</p>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="generateReport()">Generar Informe Completo</button>
+                        <button class="btn btn-success" onclick="exportToPDF()">Exportar a PDF</button>
+                        <button class="btn btn-secondary" onclick="showSection('data-entry')">Editar Datos</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historial Section -->
+            <section id="history-section" class="form-section hidden">
+                <h2 class="section-title">Historial de Estudios</h2>
+                <div class="history-container">
+                    <div id="history-list" class="history-list">
+                        <p class="no-history">No hay estudios registrados en el historial</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Ergo SaniTas SpA. Todos los derechos reservados.</p>
+            <p>Sistema desarrollado para optimización de informes Holter de Presión Arterial 24 hrs - MAPA</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
