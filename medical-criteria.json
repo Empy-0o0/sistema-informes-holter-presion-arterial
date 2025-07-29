@@ -1,0 +1,280 @@
+{
+  "metadata": {
+    "title": "Criterios Médicos Oficiales para MAPA",
+    "description": "Criterios diagnósticos basados en guías internacionales de hipertensión arterial",
+    "sources": [
+      "Sociedad Chilena de Cardiología y Cirugía Cardiovascular",
+      "European Society of Hypertension (ESH)",
+      "American Heart Association (AHA)",
+      "International Society of Hypertension (ISH)"
+    ],
+    "lastUpdated": "2025-01-29",
+    "version": "1.0"
+  },
+  "bloodPressureThresholds": {
+    "normal": {
+      "24hours": {
+        "systolic": 130,
+        "diastolic": 80,
+        "unit": "mmHg",
+        "description": "Promedio de 24 horas normal"
+      },
+      "daytime": {
+        "systolic": 135,
+        "diastolic": 85,
+        "unit": "mmHg",
+        "description": "Promedio diurno normal (vigilia)"
+      },
+      "nighttime": {
+        "systolic": 120,
+        "diastolic": 70,
+        "unit": "mmHg",
+        "description": "Promedio nocturno normal (sueño)"
+      }
+    },
+    "hypertension": {
+      "24hours": {
+        "systolic": "≥130",
+        "diastolic": "≥80",
+        "unit": "mmHg",
+        "description": "Hipertensión confirmada por MAPA 24h"
+      },
+      "daytime": {
+        "systolic": "≥135",
+        "diastolic": "≥85",
+        "unit": "mmHg",
+        "description": "Hipertensión diurna"
+      },
+      "nighttime": {
+        "systolic": "≥120",
+        "diastolic": "≥70",
+        "unit": "mmHg",
+        "description": "Hipertensión nocturna"
+      }
+    }
+  },
+  "dippingPatterns": {
+    "normal": {
+      "range": "10-20%",
+      "minValue": 10,
+      "maxValue": 20,
+      "description": "Descenso fisiológico normal de la PA durante el sueño",
+      "clinicalSignificance": "Patrón circadiano normal, menor riesgo cardiovascular"
+    },
+    "reduced": {
+      "range": "1-10%",
+      "minValue": 1,
+      "maxValue": 9.9,
+      "description": "Descenso reducido o atenuado",
+      "clinicalSignificance": "Riesgo cardiovascular intermedio"
+    },
+    "nonDipper": {
+      "range": "0-1%",
+      "minValue": -100,
+      "maxValue": 1,
+      "description": "Ausencia de descenso nocturno",
+      "clinicalSignificance": "Mayor riesgo de eventos cardiovasculares, daño de órgano blanco"
+    },
+    "extreme": {
+      "range": ">20%",
+      "minValue": 20,
+      "maxValue": 100,
+      "description": "Descenso excesivo de la PA nocturna",
+      "clinicalSignificance": "Asociado a eventos isquémicos, especialmente en ancianos"
+    },
+    "riser": {
+      "range": "<0%",
+      "minValue": -100,
+      "maxValue": 0,
+      "description": "Incremento paradójico de la PA durante el sueño",
+      "clinicalSignificance": "Muy alto riesgo cardiovascular, asociado a apnea del sueño"
+    }
+  },
+  "pulsePressure": {
+    "normal": {
+      "threshold": 50,
+      "unit": "mmHg",
+      "description": "Presión de pulso normal",
+      "calculation": "PAS - PAD"
+    },
+    "elevated": {
+      "threshold": 55,
+      "unit": "mmHg",
+      "description": "Presión de pulso elevada",
+      "clinicalSignificance": "Sugiere rigidez arterial, mayor riesgo de IAM y ACV"
+    }
+  },
+  "hypertensiveLoad": {
+    "normal": {
+      "threshold": 25,
+      "unit": "%",
+      "description": "Carga hipertensiva normal"
+    },
+    "borderline": {
+      "threshold": 40,
+      "unit": "%",
+      "description": "Carga hipertensiva límite"
+    },
+    "high": {
+      "threshold": 50,
+      "unit": "%",
+      "description": "Carga hipertensiva elevada",
+      "clinicalSignificance": "Indica control subóptimo de la PA"
+    }
+  },
+  "heartRate": {
+    "normal": {
+      "daytime": {
+        "min": 60,
+        "max": 100,
+        "unit": "lpm"
+      },
+      "nighttime": {
+        "min": 45,
+        "max": 80,
+        "unit": "lpm"
+      }
+    },
+    "abnormal": {
+      "tachycardia": {
+        "threshold": 100,
+        "unit": "lpm",
+        "description": "Taquicardia"
+      },
+      "bradycardia": {
+        "threshold": 60,
+        "unit": "lpm",
+        "description": "Bradicardia"
+      }
+    }
+  },
+  "qualityControl": {
+    "minimumReadings": {
+      "total": 70,
+      "daytime": 14,
+      "nighttime": 7,
+      "description": "Número mínimo de lecturas válidas"
+    },
+    "successRate": {
+      "acceptable": 70,
+      "good": 85,
+      "excellent": 95,
+      "unit": "%",
+      "description": "Porcentaje de lecturas exitosas"
+    }
+  },
+  "specialPopulations": {
+    "elderly": {
+      "age": "≥65 años",
+      "considerations": [
+        "Mayor prevalencia de HTA sistólica aislada",
+        "Patrón non-dipper más frecuente",
+        "Mayor riesgo de hipotensión ortostática",
+        "Presión de pulso elevada por rigidez arterial"
+      ]
+    },
+    "diabetes": {
+      "considerations": [
+        "Mayor prevalencia de HTA nocturna",
+        "Patrón circadiano alterado frecuente",
+        "Objetivos de PA más estrictos",
+        "Mayor riesgo de nefropatía"
+      ]
+    },
+    "pregnancy": {
+      "normalValues": {
+        "24hours": "<130/80",
+        "daytime": "<135/85",
+        "nighttime": "<120/70"
+      },
+      "considerations": [
+        "Útil para diagnóstico de HTA de bata blanca",
+        "Predictor de preeclampsia",
+        "Seguimiento post-parto recomendado"
+      ]
+    },
+    "pediatric": {
+      "ageRange": "6-18 años",
+      "considerations": [
+        "Valores de referencia por percentiles",
+        "Ajuste por altura y edad",
+        "HTA enmascarada más frecuente que HBB"
+      ]
+    }
+  },
+  "clinicalInterpretation": {
+    "whiteCoatHypertension": {
+      "definition": "PA elevada en consulta (≥140/90) pero normal en MAPA",
+      "prevalence": "10-25% en población general",
+      "management": "Modificación de estilos de vida, seguimiento"
+    },
+    "maskedHypertension": {
+      "definition": "PA normal en consulta (<140/90) pero elevada en MAPA",
+      "prevalence": "10-15% en población general",
+      "management": "Tratamiento farmacológico indicado"
+    },
+    "sustainedHypertension": {
+      "definition": "PA elevada tanto en consulta como en MAPA",
+      "management": "Tratamiento farmacológico definitivo"
+    },
+    "isolatedNocturnalHypertension": {
+      "definition": "PA normal diurna pero elevada nocturna",
+      "clinicalSignificance": "Forma de HTA enmascarada, alto riesgo CV"
+    }
+  },
+  "riskStratification": {
+    "lowRisk": {
+      "criteria": [
+        "PA normal en todos los períodos",
+        "Dipping normal",
+        "Presión de pulso normal",
+        "Sin factores de riesgo adicionales"
+      ]
+    },
+    "moderateRisk": {
+      "criteria": [
+        "HTA grado 1",
+        "Dipping reducido",
+        "1-2 factores de riesgo cardiovascular"
+      ]
+    },
+    "highRisk": {
+      "criteria": [
+        "HTA grado 2-3",
+        "Patrón non-dipper o riser",
+        "Presión de pulso elevada",
+        "Múltiples factores de riesgo",
+        "Daño de órgano blanco"
+      ]
+    }
+  },
+  "recommendations": {
+    "followUp": {
+      "normal": "Cada 2-3 años",
+      "whiteCoat": "Cada 6-12 meses",
+      "masked": "Cada 3-6 meses",
+      "sustained": "Según respuesta al tratamiento"
+    },
+    "lifestyle": [
+      "Reducción de peso si sobrepeso/obesidad",
+      "Dieta DASH o mediterránea",
+      "Reducción de sodio (<2.3g/día)",
+      "Ejercicio aeróbico regular",
+      "Limitación de alcohol",
+      "Cesación tabáquica",
+      "Manejo del estrés"
+    ],
+    "pharmacological": {
+      "firstLine": [
+        "IECA/ARA-II",
+        "Calcioantagonistas",
+        "Diuréticos tiazídicos"
+      ],
+      "nocturnalHypertension": [
+        "Medicación nocturna",
+        "Calcioantagonistas de acción prolongada",
+        "ARA-II con dosificación nocturna"
+      ]
+    }
+  }
+}
